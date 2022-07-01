@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3quikyempresanuevostorage03418b58",
+  "bucketName": "quikyempresanuevo-storage-03418b58",
+  "policyUUID": "52532818",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

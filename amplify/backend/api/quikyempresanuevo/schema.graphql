@@ -1,0 +1,20 @@
+enum ROLE {
+  PACIENTE
+  DOCTOR
+}
+
+type Paciente @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nombre: String
+  apellidoPaterno: String
+  apellidoMaterno: String
+  email: String
+  whatsapp: String
+  role: ROLE
+  image: String
+  url: String
+  key: String
+  fechaOrden: String
+  estudios: String
+}
+ 

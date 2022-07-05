@@ -30,12 +30,12 @@
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
-        "usernameAttributes": [
+        "usernameAttributes": [],
+        "signupAttributes": [
           "EMAIL"
         ],
-        "signupAttributes": [],
         "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 6,
+          "passwordPolicyMinLength": 7,
           "passwordPolicyCharacters": []
         },
         "mfaConfiguration": "OFF",

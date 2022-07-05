@@ -5,22 +5,32 @@ import {
   StyleSheet,
   useWindowDimensions,
   ScrollView,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
+import { Auth } from "aws-amplify";
 
 const ForgotPasswordScreen = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordRepeat, setPasswordRepeat] = useState("");
-  const { height } = useWindowDimensions();
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [passwordRepeat, setPasswordRepeat] = useState("");
+  // const { height } = useWindowDimensions();
 
+  const { control, handleSubmit } = useForm();
   const navigation = useNavigation();
 
-  const onSendPressed = () => {
-    navigation.navigate("NewPassword");
+  const onSendPressed = async data => {
+    const { username } = data;
+    try {
+      await Auth.forgotPassword(username);
+      navigation.navigate("NewPassword", { username });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onSignIn = () => {
@@ -32,13 +42,15 @@ const ForgotPasswordScreen = () => {
       <View style={styles.root}>
         <Text style={styles.title}>Vuelve a crear tu password</Text>
         <CustomInput
-          value={username}
-          setValue={setUsername}
-          placeholder="Ingresa tu email"
-          secureTextEntry={false}
+          name="username"
+          control={control}
+          placeholder="Usuario"
+          rules={{
+            required: "Ingresa tu usuario",
+          }}
         />
 
-        <CustomButton onPress={onSendPressed} text="ENVIAR" />
+        <CustomButton onPress={handleSubmit(onSendPressed)} text="ENVIAR" />
 
         <CustomButton
           onPress={onSignIn}

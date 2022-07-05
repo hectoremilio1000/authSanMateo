@@ -5,19 +5,34 @@ import {
   StyleSheet,
   useWindowDimensions,
   ScrollView,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
+import { Auth } from "aws-amplify";
+import { useRoute } from "@react-navigation/native";
 
 const NewPasswordScreen = () => {
-  const [code, setCode] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  // const [code, setCode] = useState("");
+  // const [newPassword, setNewPassword] = useState("");
+  // const navigation = useNavigation();
+  const route = useRoute();
+  const { control, handleSubmit, watch } = useForm({
+    defaultValues: { username: route?.params?.username },
+  });
+  const username = watch("username");
+
   const navigation = useNavigation();
 
-  const onSubmitPressed = () => {
-    navigation.navigate("Home");
+  const onSubmitPressed = async data => {
+    try {
+      await Auth.forgotPasswordSubmit(username, data.code, data.password);
+      navigation.navigate("SignIn");
+    } catch (error) {}
+    Alert.alert("Ha ocurrido algo, escribenos...", e.message);
   };
 
   const onSignIn = () => {
@@ -29,19 +44,32 @@ const NewPasswordScreen = () => {
       <View style={styles.root}>
         <Text style={styles.title}>Crea tu nueva contraseña</Text>
         <CustomInput
-          value={code}
-          setValue={setCode}
-          placeholder="Ingresa tu código"
-          secureTextEntry={true}
-        />
-        <CustomInput
-          value={newPassword}
-          setValue={setNewPassword}
-          placeholder="Nueva contraseña"
-          secureTextEntry={true}
+          placeholder="Email"
+          name="username"
+          control={control}
+          rules={{ required: "Se requiere Email" }}
         />
 
-        <CustomButton onPress={onSubmitPressed} text="ENVIAR" />
+        <CustomInput
+          placeholder="Code"
+          name="code"
+          control={control}
+          rules={{ required: "Se requiere código" }}
+        />
+        <CustomInput
+          placeholder="Ingresa tu nuevo password"
+          name="password"
+          control={control}
+          secureTextEntry
+          rules={{
+            required: "Se requiere password",
+            minLength: {
+              value: 8,
+              message: "Password should be at least 8 characters long",
+            },
+          }}
+        />
+        <CustomButton onPress={handleSubmit(onSubmitPressed)} text="ENVIAR" />
 
         <CustomButton
           onPress={onSignIn}

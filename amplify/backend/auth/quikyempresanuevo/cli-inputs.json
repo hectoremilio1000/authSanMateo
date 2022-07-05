@@ -2,8 +2,8 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
-    "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "quikye21803b0f",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "quikye02772a53",
     "userPoolName": "quikyempresanuevo",
     "autoVerifiedAttributes": [
       "email"
@@ -17,23 +17,22 @@
     "emailVerificationSubject": "Verification code: {####}",
     "emailVerificationMessage": "Verification code: {####}",
     "defaultPasswordPolicy": false,
-    "passwordPolicyMinLength": 6,
+    "passwordPolicyMinLength": 7,
     "passwordPolicyCharacters": [],
-    "requiredAttributes": [],
+    "requiredAttributes": [
+      "email"
+    ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "quikye21803b0f_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "quikye02772a53_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "21803b0f",
+    "sharedId": "02772a53",
     "resourceName": "quikyempresanuevo",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
-    "usernameAttributes": [
-      "email"
-    ],
     "useDefault": "manual",
     "userPoolGroups": false,
     "userPoolGroupList": [],
@@ -41,20 +40,6 @@
     "thirdPartyAuth": false,
     "authProviders": [],
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true,
-    "authRoleArn": {
-      "Fn::GetAtt": [
-        "AuthRole",
-        "Arn"
-      ]
-    },
-    "unauthRoleArn": {
-      "Fn::GetAtt": [
-        "UnauthRole",
-        "Arn"
-      ]
-    },
-    "breakCircularDependency": true,
-    "dependsOn": []
+    "useEnabledMfas": true
   }
 }
